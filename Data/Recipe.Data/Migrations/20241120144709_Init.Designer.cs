@@ -12,8 +12,8 @@ using Recipe.Data;
 namespace Recipe.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241114085419_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241120144709_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -403,6 +403,9 @@ namespace Recipe.Data.Migrations
                     b.Property<int>("IngridientId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Quantity")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
@@ -473,7 +476,7 @@ namespace Recipe.Data.Migrations
                         .HasForeignKey("AddedByUserId");
 
                     b.HasOne("Recipe.Data.Models.Recipe", "Recipe")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -540,6 +543,8 @@ namespace Recipe.Data.Migrations
 
             modelBuilder.Entity("Recipe.Data.Models.Recipe", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("Ingridients");
                 });
 #pragma warning restore 612, 618

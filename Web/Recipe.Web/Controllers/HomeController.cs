@@ -1,30 +1,24 @@
-﻿namespace Recipe.Web.Controllers
-{
-    using System.Diagnostics;
-    using System.Linq;
-    using AutoMapper;
-    using Microsoft.AspNetCore.Mvc;
-    using Recipe.Data;
-    using Recipe.Data.Common.Repositories;
-    using Recipe.Data.Models;
-    using Recipe.Services.Data;
-    using Recipe.Web.ViewModels;
-    using Recipe.Web.ViewModels.Home;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Recipe.Services.Data;
+using Recipe.Web.ViewModels;
+using Recipe.Web.ViewModels.Home;
 
+namespace Recipe.Web.Controllers
+{
     public class HomeController : BaseController
     {
         private readonly IGetCountsService getCountsService;
-        private readonly IMapper mapper;
+       
 
-        public HomeController(IGetCountsService getCountsService,IMapper mapper)
+        public HomeController(IGetCountsService getCountsService)
         {
             this.getCountsService = getCountsService;
-            this.mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            var counts = getCountsService.GetCount();
+            var counts = this.getCountsService.GetCount();
             //var viewModel = this.mapper.Map<IndexViewModel>(counts);
 
             var viewModel = new IndexViewModel

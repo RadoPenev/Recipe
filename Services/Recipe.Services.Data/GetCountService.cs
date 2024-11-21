@@ -1,7 +1,6 @@
 ﻿using Recipe.Data.Common.Repositories;
 using Recipe.Data.Models;
 using Recipe.Web.Models;
-using Recipe.Web.ViewModels.Home;
 using System.Linq;
 
 namespace Recipe.Services.Data

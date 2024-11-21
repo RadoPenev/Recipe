@@ -18,5 +18,6 @@ namespace Recipe.Data.Models
         public int IngridientId { get; set; }
 
         public virtual Ingredient Ingridient { get; set; }
+        public string Quantity { get; set; }
     }
 }

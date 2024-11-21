@@ -400,6 +400,9 @@ namespace Recipe.Data.Migrations
                     b.Property<int>("IngridientId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Quantity")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
@@ -470,7 +473,7 @@ namespace Recipe.Data.Migrations
                         .HasForeignKey("AddedByUserId");
 
                     b.HasOne("Recipe.Data.Models.Recipe", "Recipe")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -537,6 +540,8 @@ namespace Recipe.Data.Migrations
 
             modelBuilder.Entity("Recipe.Data.Models.Recipe", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("Ingridients");
                 });
 #pragma warning restore 612, 618
