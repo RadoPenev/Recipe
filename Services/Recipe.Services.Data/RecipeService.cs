@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Recipe.Data.Common.Repositories;
+﻿using Recipe.Data.Common.Repositories;
 using Recipe.Data.Models;
 using Recipe.Services.Mapping;
 using Recipe.Web.ViewModels.Recipes;
@@ -49,9 +47,9 @@ namespace Recipe.Services.Data
                     ingredient = new Ingredient { Name = item.IngredientName };
                 }
 
-                recipe.Ingridients.Add(new RecipeIngridient
+                recipe.Ingredients.Add(new RecipeIngredient
                 {
-                   Ingridient= ingredient,
+                   Ingredient= ingredient,
                     Quantity = item.Quantity
                 });
             }
@@ -60,7 +58,7 @@ namespace Recipe.Services.Data
 
             foreach (var image in input.Images)
             {
-                var extension = Path.GetExtension(image.FileName);
+                var extension = Path.GetExtension(image.FileName).TrimStart('.');
 
                 if (!allowedExtensions.Any(x => x.EndsWith(x)))
                 {
@@ -87,14 +85,21 @@ namespace Recipe.Services.Data
             await this.recipeRepo.SaveChangesAsync();
         }
 
-        public IEnumerable<RecipesInListVIewModel> GetAll(int page, int itemsPerPage = 12)
+        public IEnumerable<RecipesInListViewModel> GetAll(int page, int itemsPerPage = 12)
         {
            return this.recipeRepo.AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
-                .To<RecipesInListVIewModel>()
+                .To<RecipesInListViewModel>()
                 .ToList();
+        }
+
+        public T GetById<T>(int id)
+        {
+            return this.recipeRepo.AllAsNoTracking().Where(x=>x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
         }
 
         public int GetCount()

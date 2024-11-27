@@ -28,7 +28,7 @@ namespace Recipe.Services.Data
             {
                 RecipiesCount = this.recipesRepository.All().Count(),
                 CategoriesCount = this.categoriesRepository.All().Count(),
-                IngridientsCount = this.ingredientsRepository.All().Count(),
+                IngredientsCount = this.ingredientsRepository.All().Count(),
                 ImagesCount = this.imagesRepository.All().Count(),
             };
 

@@ -8,8 +8,10 @@ namespace Recipe.Services.Data
     {
         Task CreateAsync(CreateRecipeInputModel input,string userId, string imagePath);
 
-        IEnumerable<RecipesInListVIewModel> GetAll(int page, int itemsPerPage=12);
+        IEnumerable<RecipesInListViewModel> GetAll(int page, int itemsPerPage=12);
 
         int GetCount();
+
+        T GetById<T>(int id);
     }
 }
