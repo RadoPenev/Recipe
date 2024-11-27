@@ -1,4 +1,5 @@
-﻿using Recipe.Data.Models;
+﻿using Microsoft.AspNetCore.Http;
+using Recipe.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +27,7 @@ namespace Recipe.Web.ViewModels.Recipes
         public int PortionsCount { get; set; }
         public int CategoryId { get; set; }
 
-
+        public IEnumerable<IFormFile> Images { get; set; }
 
         public IEnumerable<RecipeIngredientInputModel> Ingredients { get; set; }
 

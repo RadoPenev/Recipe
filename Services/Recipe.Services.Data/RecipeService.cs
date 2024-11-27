@@ -1,9 +1,12 @@
-﻿using Recipe.Data.Common.Repositories;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using Recipe.Data.Common.Repositories;
 using Recipe.Data.Models;
 using Recipe.Services.Mapping;
 using Recipe.Web.ViewModels.Recipes;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 namespace Recipe.Services.Data
@@ -12,18 +15,19 @@ namespace Recipe.Services.Data
     {
         private readonly IDeletableEntityRepository<Recipe.Data.Models.Recipe> recipeRepo;
         private readonly IDeletableEntityRepository<Ingredient> ingredientRepo;
-        private readonly IRepository<Image> imageRepo;
+
+  
 
         public RecipeService(IDeletableEntityRepository<Recipe.Data.Models.Recipe> recipeRepo,
-           IDeletableEntityRepository<Ingredient>  ingredientRepo,
-           IRepository<Image> imageRepo)
+           IDeletableEntityRepository<Ingredient>  ingredientRepo)
         {
             this.recipeRepo = recipeRepo;
             this.ingredientRepo = ingredientRepo;
-            this.imageRepo = imageRepo;
         }
 
-        public async Task CreateAsync(CreateRecipeInputModel input,string userId)
+        
+
+        public async Task CreateAsync(CreateRecipeInputModel input,string userId, string imagePath)
         {
             var recipe = new Recipe.Data.Models.Recipe { 
                 AddedByUserId = userId,
@@ -34,6 +38,8 @@ namespace Recipe.Services.Data
             PortionsCount=input.PortionsCount,
             Instructions=input.Instructions,
             };
+
+            Directory.CreateDirectory($"{imagePath}/recipes/");
 
             foreach (var item in input.Ingredients)
             {
@@ -49,6 +55,33 @@ namespace Recipe.Services.Data
                     Quantity = item.Quantity
                 });
             }
+
+            var allowedExtensions = new[] { "jpeg", "png", "gif" };
+
+            foreach (var image in input.Images)
+            {
+                var extension = Path.GetExtension(image.FileName);
+
+                if (!allowedExtensions.Any(x => x.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {extension}!");
+                }
+                var dbImages = new Image
+                {
+                    AddedByUserId=userId,
+                    Extension=extension,
+                };
+                recipe.Images.Add(dbImages);
+
+              
+                var physicalPath = $"{imagePath}/recipes/{dbImages.Id}.{extension}";
+                using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
+
+            }
+
 
             await this.recipeRepo.AddAsync(recipe);
             await this.recipeRepo.SaveChangesAsync();

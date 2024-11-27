@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Recipe.Data.Models;
 using Recipe.Services.Data;
 using Recipe.Web.ViewModels.Recipes;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -14,14 +16,17 @@ namespace Recipe.Web.Controllers
         private readonly ICategoriesService categoriesService;
         private readonly IRecipeService recipeService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWebHostEnvironment environment;
 
         public RecipesController(ICategoriesService categoriesService,
             IRecipeService recipeService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IWebHostEnvironment environment)
         {
             this.categoriesService = categoriesService;
             this.recipeService = recipeService;
             this.userManager = userManager;
+            this.environment = environment;
         }
         [Authorize]
         public IActionResult Create()
@@ -41,7 +46,16 @@ namespace Recipe.Web.Controllers
                 return this.View();
             }
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.recipeService.CreateAsync(input,user.Id);
+
+            try
+            {
+                await this.recipeService.CreateAsync(input, user.Id, $"{this.environment.WebRootPath}/images");
+            }
+            catch (Exception ex)
+            {
+ModelState.AddModelError(string.Empty,ex.Message);
+            }
+           
 
             return this.Redirect("/");
         }
