@@ -19,6 +19,7 @@ namespace Recipe.Data.Models
         public virtual Recipe Recipe { get; set; }
 
         public string Extension { get; set; }
+        public string RemoteImageUrl { get; set; }
 
         public string AddedByUserId { get; set; }
 

@@ -1,7 +1,9 @@
 ﻿using Recipe.Data.Common.Repositories;
 using Recipe.Data.Models;
+using Recipe.Services.Mapping;
 using Recipe.Web.ViewModels.Recipes;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 namespace Recipe.Services.Data
@@ -10,17 +12,21 @@ namespace Recipe.Services.Data
     {
         private readonly IDeletableEntityRepository<Recipe.Data.Models.Recipe> recipeRepo;
         private readonly IDeletableEntityRepository<Ingredient> ingredientRepo;
+        private readonly IRepository<Image> imageRepo;
 
         public RecipeService(IDeletableEntityRepository<Recipe.Data.Models.Recipe> recipeRepo,
-           IDeletableEntityRepository<Ingredient>  ingredientRepo)
+           IDeletableEntityRepository<Ingredient>  ingredientRepo,
+           IRepository<Image> imageRepo)
         {
             this.recipeRepo = recipeRepo;
             this.ingredientRepo = ingredientRepo;
+            this.imageRepo = imageRepo;
         }
 
-        public async Task CreateAsync(CreateRecipeInputModel input)
+        public async Task CreateAsync(CreateRecipeInputModel input,string userId)
         {
             var recipe = new Recipe.Data.Models.Recipe { 
+                AddedByUserId = userId,
             CategoryId = input.CategoryId,
             Name = input.Name,
             CookingTime=TimeSpan.FromMinutes(input.CookingTime),
@@ -42,11 +48,25 @@ namespace Recipe.Services.Data
                    Ingridient= ingredient,
                     Quantity = item.Quantity
                 });
-                
             }
+
             await this.recipeRepo.AddAsync(recipe);
             await this.recipeRepo.SaveChangesAsync();
+        }
 
+        public IEnumerable<RecipesInListVIewModel> GetAll(int page, int itemsPerPage = 12)
+        {
+           return this.recipeRepo.AllAsNoTracking()
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .To<RecipesInListVIewModel>()
+                .ToList();
+        }
+
+        public int GetCount()
+        {
+            return this.recipeRepo.All().Count();
         }
     }
 }

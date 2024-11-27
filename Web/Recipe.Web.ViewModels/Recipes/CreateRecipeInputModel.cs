@@ -26,6 +26,8 @@ namespace Recipe.Web.ViewModels.Recipes
         public int PortionsCount { get; set; }
         public int CategoryId { get; set; }
 
+
+
         public IEnumerable<RecipeIngredientInputModel> Ingredients { get; set; }
 
         public IEnumerable<KeyValuePair<string,string>> CategoriesItems { get; set; }
