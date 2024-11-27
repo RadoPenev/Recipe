@@ -392,7 +392,7 @@ namespace Recipe.Data.Migrations
                     b.ToTable("Recipes");
                 });
 
-            modelBuilder.Entity("Recipe.Data.Models.RecipeIngridient", b =>
+            modelBuilder.Entity("Recipe.Data.Models.RecipeIngredient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -400,7 +400,7 @@ namespace Recipe.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("IngridientId")
+                    b.Property<int>("IngredientId")
                         .HasColumnType("int");
 
                     b.Property<string>("Quantity")
@@ -411,11 +411,11 @@ namespace Recipe.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IngridientId");
+                    b.HasIndex("IngredientId");
 
                     b.HasIndex("RecipeId");
 
-                    b.ToTable("RecipeIngridients");
+                    b.ToTable("RecipeIngredients");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -503,21 +503,21 @@ namespace Recipe.Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Recipe.Data.Models.RecipeIngridient", b =>
+            modelBuilder.Entity("Recipe.Data.Models.RecipeIngredient", b =>
                 {
-                    b.HasOne("Recipe.Data.Models.Ingredient", "Ingridient")
+                    b.HasOne("Recipe.Data.Models.Ingredient", "Ingredient")
                         .WithMany("Recipes")
-                        .HasForeignKey("IngridientId")
+                        .HasForeignKey("IngredientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Recipe.Data.Models.Recipe", "Recipe")
-                        .WithMany("Ingridients")
+                        .WithMany("Ingredients")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Ingridient");
+                    b.Navigation("Ingredient");
 
                     b.Navigation("Recipe");
                 });
@@ -545,7 +545,7 @@ namespace Recipe.Data.Migrations
                 {
                     b.Navigation("Images");
 
-                    b.Navigation("Ingridients");
+                    b.Navigation("Ingredients");
                 });
 #pragma warning restore 612, 618
         }

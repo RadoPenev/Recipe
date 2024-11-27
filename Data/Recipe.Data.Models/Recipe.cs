@@ -9,7 +9,7 @@ namespace Recipe.Data.Models
 
         public Recipe()
         {
-            this.Ingridients = new HashSet<RecipeIngridient>();
+            this.Ingredients = new HashSet<RecipeIngredient>();
             this.Images=new HashSet<Image>();
         }
 
@@ -31,7 +31,7 @@ namespace Recipe.Data.Models
 
         public virtual Category Category { get; set; }
 
-        public virtual ICollection<RecipeIngridient> Ingridients { get; set; }
+        public virtual ICollection<RecipeIngredient> Ingredients { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }
     }

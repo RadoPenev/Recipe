@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Recipe.Data.Models
 {
-    public class RecipeIngridient
+    public class RecipeIngredient
     {
         public int Id { get; set; }
 
@@ -15,9 +15,9 @@ namespace Recipe.Data.Models
 
         public virtual Recipe Recipe { get; set; }
 
-        public int IngridientId { get; set; }
+        public int IngredientId { get; set; }
 
-        public virtual Ingredient Ingridient { get; set; }
+        public virtual Ingredient Ingredient { get; set; }
         public string Quantity { get; set; }
     }
 }

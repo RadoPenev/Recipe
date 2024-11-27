@@ -33,7 +33,7 @@
 
         public DbSet<Category> Categories { get; set; }
 
-        public DbSet<RecipeIngridient> RecipeIngridients { get; set; }
+        public DbSet<RecipeIngredient> RecipeIngredients { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

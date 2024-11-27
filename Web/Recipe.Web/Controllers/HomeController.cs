@@ -24,7 +24,7 @@ namespace Recipe.Web.Controllers
             var viewModel = new IndexViewModel
             {
                 RecipiesCount = counts.RecipiesCount,
-                IngridientsCount = counts.IngridientsCount,
+                IngredientsCount = counts.IngredientsCount,
                 ImagesCount = counts.ImagesCount,
                 CategoriesCount = counts.CategoriesCount,
             };

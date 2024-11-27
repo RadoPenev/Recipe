@@ -260,26 +260,26 @@ namespace Recipe.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RecipeIngridients",
+                name: "RecipeIngredients",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RecipeId = table.Column<int>(type: "int", nullable: false),
-                    IngridientId = table.Column<int>(type: "int", nullable: false),
+                    IngredientId = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RecipeIngridients", x => x.Id);
+                    table.PrimaryKey("PK_RecipeIngredients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RecipeIngridients_Ingredients_IngridientId",
-                        column: x => x.IngridientId,
+                        name: "FK_RecipeIngredients_Ingredients_IngredientId",
+                        column: x => x.IngredientId,
                         principalTable: "Ingredients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_RecipeIngridients_Recipes_RecipeId",
+                        name: "FK_RecipeIngredients_Recipes_RecipeId",
                         column: x => x.RecipeId,
                         principalTable: "Recipes",
                         principalColumn: "Id",
@@ -356,13 +356,13 @@ namespace Recipe.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecipeIngridients_IngridientId",
-                table: "RecipeIngridients",
-                column: "IngridientId");
+                name: "IX_RecipeIngredients_IngredientId",
+                table: "RecipeIngredients",
+                column: "IngredientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecipeIngridients_RecipeId",
-                table: "RecipeIngridients",
+                name: "IX_RecipeIngredients_RecipeId",
+                table: "RecipeIngredients",
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
@@ -403,7 +403,7 @@ namespace Recipe.Data.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "RecipeIngridients");
+                name: "RecipeIngredients");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

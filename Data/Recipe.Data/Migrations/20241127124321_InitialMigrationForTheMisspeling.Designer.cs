@@ -12,8 +12,8 @@ using Recipe.Data;
 namespace Recipe.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241120144709_Init")]
-    partial class Init
+    [Migration("20241127124321_InitialMigrationForTheMisspeling")]
+    partial class InitialMigrationForTheMisspeling
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -300,6 +300,9 @@ namespace Recipe.Data.Migrations
 
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("RemoteImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

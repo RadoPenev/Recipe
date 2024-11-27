@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Recipe.Web.ViewModels.Recipes
 {
-    public class RecipesInListVIewModel : IMapFrom<Recipe.Data.Models.Recipe>, IHaveCustomMappings
+    public class RecipesInListViewModel : IMapFrom<Recipe.Data.Models.Recipe>, IHaveCustomMappings
     {
         public int Id { get; set; }
         public string ImageUrl { get; set; }
@@ -14,11 +14,11 @@ namespace Recipe.Web.ViewModels.Recipes
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Recipe.Data.Models.Recipe, RecipesInListVIewModel>()
+            configuration.CreateMap<Recipe.Data.Models.Recipe, RecipesInListViewModel>()
                 .ForMember(x => x.ImageUrl, opt =>
                 opt.MapFrom(x => x.Images.FirstOrDefault().RemoteImageUrl != null ?
                     x.Images.FirstOrDefault().RemoteImageUrl :
-                    "images/recipes/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
+                    "/images/recipes/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
         }
     }
 }

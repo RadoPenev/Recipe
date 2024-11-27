@@ -8,11 +8,11 @@
 
         public Ingredient()
         {
-            this.Recipes = new HashSet<RecipeIngridient>();
+            this.Recipes = new HashSet<RecipeIngredient>();
         }
 
         public string Name { get; set; }
 
-        public ICollection<RecipeIngridient> Recipes { get; set; }
+        public ICollection<RecipeIngredient> Recipes { get; set; }
     }
 }

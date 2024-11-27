@@ -6,7 +6,6 @@ using Recipe.Data.Models;
 using Recipe.Services.Data;
 using Recipe.Web.ViewModels.Recipes;
 using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Recipe.Web.Controllers
@@ -71,6 +70,13 @@ ModelState.AddModelError(string.Empty,ex.Message);
                 RecipesCount = this.recipeService.GetCount(),
             };
             return this.View(viewModel);
+        }
+
+        public IActionResult ById(int id)
+        {
+            var recipe=this.recipeService.GetById<SingleRecipeViewModel>(id);
+
+            return this.View(recipe);
         }
     }
 }

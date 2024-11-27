@@ -9,7 +9,7 @@ namespace Recipe.Web.ViewModels.Recipes
 {
     public class RecipesListViewModel
     {
-        public IEnumerable<RecipesInListVIewModel> Recipes { get; set; }
+        public IEnumerable<RecipesInListViewModel> Recipes { get; set; }
         public bool HasPreviousPage => this.PageNumber > 1;
         public bool HasNextPage => this.PageNumber < this.PagesCount;
         public int PreviousPageNumber => this.PageNumber - 1;
