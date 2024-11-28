@@ -97,9 +97,10 @@ namespace Recipe.Services.Data
 
         public T GetById<T>(int id)
         {
-            return this.recipeRepo.AllAsNoTracking().Where(x=>x.Id == id)
-                .To<T>()
-                .FirstOrDefault();
+           
+                return this.recipeRepo.AllAsNoTracking().Where(x => x.Id == id)
+              .To<T>()
+              .FirstOrDefault();
         }
 
         public int GetCount()
