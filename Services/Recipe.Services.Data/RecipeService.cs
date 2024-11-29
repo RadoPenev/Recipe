@@ -107,5 +107,25 @@ namespace Recipe.Services.Data
         {
             return this.recipeRepo.All().Count();
         }
+
+        public IEnumerable<T> GetRandom<T>(int count)
+        {
+            return this.recipeRepo.All().OrderBy(x=> Guid.NewGuid())
+                .Take(count)
+                .To<T>().ToList();
+        }
+
+        public async Task UpdateAsync(int id, EditRecipeInputModel input)
+        {
+            var recipe =this.recipeRepo.All().FirstOrDefault(x=> x.Id == id);
+            recipe.Name= input.Name;
+            recipe.Instructions = input.Instructions;
+            recipe.PreparationTime = TimeSpan.FromMinutes(input.PreparationTime);
+            recipe.CookingTime= TimeSpan.FromMinutes(input.CookingTime);
+            recipe.PortionsCount= input.PortionsCount;
+            recipe.CategoryId= input.CategoryId;
+
+            await this.recipeRepo.SaveChangesAsync();
+        }
     }
 }

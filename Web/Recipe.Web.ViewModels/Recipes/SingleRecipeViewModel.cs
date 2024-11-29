@@ -23,8 +23,10 @@ namespace Recipe.Web.ViewModels.Recipes
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Recipe.Data.Models.Recipe, SingleRecipeViewModel>()
-                .ForMember(x => x.AverageVote, otp => otp.MapFrom(x => x.Votes.Count==0 ? 0: x.Votes.Average(y => y.Value)))
-                .ForMember(x => x.ImageUrl, opt => opt.MapFrom(x => x.Images.FirstOrDefault().RemoteImageUrl ?? "/images/recipes/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
+                .ForMember(x => x.AverageVote, otp =>
+                otp.MapFrom(x => x.Votes.Count==0 ? 0: x.Votes.Average(y => y.Value)))
+                .ForMember(x => x.ImageUrl, opt => 
+                opt.MapFrom(x => x.Images.FirstOrDefault().RemoteImageUrl ?? "/images/recipes/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
         }
 
 

@@ -9,11 +9,13 @@ namespace Recipe.Web.Controllers
     public class HomeController : BaseController
     {
         private readonly IGetCountsService getCountsService;
-       
+        private readonly IRecipeService recipeService;
 
-        public HomeController(IGetCountsService getCountsService)
+        public HomeController(IGetCountsService getCountsService,
+            IRecipeService recipeService)
         {
             this.getCountsService = getCountsService;
+            this.recipeService = recipeService;
         }
 
         public IActionResult Index()
@@ -27,6 +29,7 @@ namespace Recipe.Web.Controllers
                 IngredientsCount = counts.IngredientsCount,
                 ImagesCount = counts.ImagesCount,
                 CategoriesCount = counts.CategoriesCount,
+                RandomRecipes = this.recipeService.GetRandom<IndexPageRecipeViewModel>(3),
             };
 
             return this.View(viewModel);
