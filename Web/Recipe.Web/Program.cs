@@ -1,5 +1,8 @@
 ﻿namespace Recipe.Web
 {
+    
+
+
     using System.Reflection;
 
     using Recipe.Data;
@@ -69,7 +72,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(x=> new SendGridEmailSender(configuration["SendGrid:ApiKey"]));
             services.AddTransient<IGetCountsService,GetCountService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IRecipeService, RecipeService>();

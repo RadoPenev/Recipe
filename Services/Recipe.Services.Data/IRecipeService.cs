@@ -19,5 +19,7 @@ namespace Recipe.Services.Data
         Task UpdateAsync(int id, EditRecipeInputModel input);
 
         IEnumerable<T> GetByIngredient<T>(IEnumerable<int> IngredientIds);
+
+        Task DeleteAsync(int id);
     }
 }

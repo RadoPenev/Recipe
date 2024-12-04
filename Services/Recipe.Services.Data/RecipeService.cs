@@ -85,6 +85,13 @@ namespace Recipe.Services.Data
             await this.recipeRepo.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int id)
+        {
+         var recipe = this.recipeRepo.All().FirstOrDefault(x => x.Id == id);
+            this.recipeRepo.Delete(recipe);
+            await this.recipeRepo.SaveChangesAsync();
+        }
+
         public IEnumerable<RecipesInListViewModel> GetAll(int page, int itemsPerPage = 12)
         {
            return this.recipeRepo.AllAsNoTracking()
