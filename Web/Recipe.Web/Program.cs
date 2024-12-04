@@ -21,6 +21,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Recipe.Services.Data;
+    using Recipe.Services.Data.Models;
 
     public class Program
     {
@@ -73,7 +74,7 @@
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IRecipeService, RecipeService>();
             services.AddTransient<IVotesService, VotesService>();
-
+            services.AddTransient<IIngredientService,IngredientService>();
 
         }
 

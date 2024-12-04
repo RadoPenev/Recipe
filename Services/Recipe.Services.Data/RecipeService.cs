@@ -102,6 +102,19 @@ namespace Recipe.Services.Data
               .To<T>()
               .FirstOrDefault();
         }
+        public IEnumerable<T> GetByIngredient<T>(IEnumerable<int> IngredientIds)
+        {
+            if (IngredientIds == null || !IngredientIds.Any())
+            {
+                return Enumerable.Empty<T>();
+            }
+
+            var query = this.recipeRepo.All();
+
+            query = query.Where(x => x.Ingredients.Any(i => IngredientIds.Contains(i.IngredientId)));
+
+            return query.To<T>().ToList(); 
+        }
 
         public int GetCount()
         {

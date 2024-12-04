@@ -17,5 +17,7 @@ namespace Recipe.Services.Data
         T GetById<T>(int id);
 
         Task UpdateAsync(int id, EditRecipeInputModel input);
+
+        IEnumerable<T> GetByIngredient<T>(IEnumerable<int> IngredientIds);
     }
 }
